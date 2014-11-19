@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA7C44EB1A1C719C00FA2252 /* KTVAURender.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7C44EA1A1C719C00FA2252 /* KTVAURender.m */; };
+		AA7C44F21A1C8BE800FA2252 /* AURecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7C44F11A1C8BE800FA2252 /* AURecorder.m */; };
 		AAB7C4861A1B3D7100B5221E /* MiAmor.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AAB7C4851A1B3D7100B5221E /* MiAmor.mp3 */; };
 		AAC3D5D01A19F50E001EB68F /* humanVoice.caf in Resources */ = {isa = PBXBuildFile; fileRef = AAC3D5CF1A19F50E001EB68F /* humanVoice.caf */; };
-		B60831BC15B314B200354643 /* My Song pt.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B60831BB15B314B200354643 /* My Song pt.mp3 */; };
 		B657878115A8431700D736FF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B657878015A8431700D736FF /* UIKit.framework */; };
 		B657878315A8431700D736FF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B657878215A8431700D736FF /* Foundation.framework */; };
 		B657878515A8431700D736FF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B657878415A8431700D736FF /* CoreGraphics.framework */; };
@@ -20,17 +21,18 @@
 		B657879E15A8432600D736FF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B657879D15A8432600D736FF /* AudioToolbox.framework */; };
 		B65787A115A8445300D736FF /* MusicListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B65787A015A8445300D736FF /* MusicListViewController.m */; };
 		B65787A415A8467700D736FF /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B65787A315A8467700D736FF /* PlayerViewController.m */; };
-		B668F7D215B196AD007B02C8 /* My Song.wav in Resources */ = {isa = PBXBuildFile; fileRef = B668F7D015B196AD007B02C8 /* My Song.wav */; };
-		B668F7D515B1978D007B02C8 /* My Song.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B668F7D415B1978D007B02C8 /* My Song.m4a */; };
 		B6771B1215A857D200D0AD44 /* AudioFilePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B6771B1115A857D200D0AD44 /* AudioFilePlayer.m */; };
 		B6771B1A15A8590F00D0AD44 /* AudioUtilities.c in Sources */ = {isa = PBXBuildFile; fileRef = B6771B1915A8590F00D0AD44 /* AudioUtilities.c */; };
 		B6ABB98915B306E100DADC93 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6ABB98815B306E100DADC93 /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AA7C44E91A1C719C00FA2252 /* KTVAURender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTVAURender.h; sourceTree = "<group>"; };
+		AA7C44EA1A1C719C00FA2252 /* KTVAURender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTVAURender.m; sourceTree = "<group>"; };
+		AA7C44F01A1C8BE800FA2252 /* AURecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AURecorder.h; sourceTree = "<group>"; };
+		AA7C44F11A1C8BE800FA2252 /* AURecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AURecorder.m; sourceTree = "<group>"; };
 		AAB7C4851A1B3D7100B5221E /* MiAmor.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = MiAmor.mp3; sourceTree = "<group>"; };
 		AAC3D5CF1A19F50E001EB68F /* humanVoice.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = humanVoice.caf; sourceTree = "<group>"; };
-		B60831BB15B314B200354643 /* My Song pt.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "My Song pt.mp3"; sourceTree = "<group>"; };
 		B657877C15A8431700D736FF /* AudioFilePlayerSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioFilePlayerSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B657878015A8431700D736FF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B657878215A8431700D736FF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -47,8 +49,6 @@
 		B65787A015A8445300D736FF /* MusicListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicListViewController.m; sourceTree = "<group>"; };
 		B65787A215A8467700D736FF /* PlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerViewController.h; sourceTree = "<group>"; };
 		B65787A315A8467700D736FF /* PlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerViewController.m; sourceTree = "<group>"; };
-		B668F7D015B196AD007B02C8 /* My Song.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "My Song.wav"; sourceTree = "<group>"; };
-		B668F7D415B1978D007B02C8 /* My Song.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "My Song.m4a"; sourceTree = "<group>"; };
 		B6771B1015A857D100D0AD44 /* AudioFilePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFilePlayer.h; sourceTree = "<group>"; };
 		B6771B1115A857D200D0AD44 /* AudioFilePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioFilePlayer.m; sourceTree = "<group>"; };
 		B6771B1815A8590F00D0AD44 /* AudioUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioUtilities.h; sourceTree = "<group>"; };
@@ -108,6 +108,10 @@
 				B6771B1115A857D200D0AD44 /* AudioFilePlayer.m */,
 				B657878F15A8431700D736FF /* AppDelegate.h */,
 				B657879015A8431700D736FF /* AppDelegate.m */,
+				AA7C44F01A1C8BE800FA2252 /* AURecorder.h */,
+				AA7C44F11A1C8BE800FA2252 /* AURecorder.m */,
+				AA7C44E91A1C719C00FA2252 /* KTVAURender.h */,
+				AA7C44EA1A1C719C00FA2252 /* KTVAURender.m */,
 				B657879215A8431700D736FF /* MainStoryboard.storyboard */,
 				B657879F15A8445300D736FF /* MusicListViewController.h */,
 				B65787A015A8445300D736FF /* MusicListViewController.m */,
@@ -117,9 +121,6 @@
 				B6771B1915A8590F00D0AD44 /* AudioUtilities.c */,
 				AAC3D5CF1A19F50E001EB68F /* humanVoice.caf */,
 				AAB7C4851A1B3D7100B5221E /* MiAmor.mp3 */,
-				B668F7D015B196AD007B02C8 /* My Song.wav */,
-				B60831BB15B314B200354643 /* My Song pt.mp3 */,
-				B668F7D415B1978D007B02C8 /* My Song.m4a */,
 				B657878715A8431700D736FF /* Supporting Files */,
 			);
 			path = AudioFilePlayerSample;
@@ -189,10 +190,7 @@
 				B657878B15A8431700D736FF /* InfoPlist.strings in Resources */,
 				AAC3D5D01A19F50E001EB68F /* humanVoice.caf in Resources */,
 				B657879415A8431700D736FF /* MainStoryboard.storyboard in Resources */,
-				B668F7D215B196AD007B02C8 /* My Song.wav in Resources */,
-				B668F7D515B1978D007B02C8 /* My Song.m4a in Resources */,
 				AAB7C4861A1B3D7100B5221E /* MiAmor.mp3 in Resources */,
-				B60831BC15B314B200354643 /* My Song pt.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,6 +203,8 @@
 			files = (
 				B657878D15A8431700D736FF /* main.m in Sources */,
 				B657879115A8431700D736FF /* AppDelegate.m in Sources */,
+				AA7C44EB1A1C719C00FA2252 /* KTVAURender.m in Sources */,
+				AA7C44F21A1C8BE800FA2252 /* AURecorder.m in Sources */,
 				B65787A115A8445300D736FF /* MusicListViewController.m in Sources */,
 				B65787A415A8467700D736FF /* PlayerViewController.m in Sources */,
 				B6771B1215A857D200D0AD44 /* AudioFilePlayer.m in Sources */,

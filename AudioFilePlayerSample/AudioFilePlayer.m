@@ -16,6 +16,13 @@ static uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     return nanoSec * timebaseInfo.denom / timebaseInfo.numer;
 }
 
+//OSStatus recordRenderNotify(void                        *inRefCon,
+//                            AudioUnitRenderActionFlags  *ioActionFlags,
+//                            const AudioTimeStamp        *inTimeStamp,
+//                            UInt32                      inBusNumber,
+//                            UInt32                      inNumberFrames,
+//                            AudioBufferList             *ioData);
+
 @interface AudioFilePlayer()
 - (void)createAUGraph;
 - (void)disposeAUGraph;
@@ -28,6 +35,9 @@ static uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     
     AudioFileID _audioFileID;
     AudioFileID _humanAudioFileID;
+    
+    ExtAudioFileRef _destExtAudioFile;
+    AudioFileID _destFileID;
     
     AudioStreamBasicDescription _audioFileFormat;
     UInt32 _audioFileFrames;
@@ -129,7 +139,6 @@ static AudioFilePlayer *_sharedAudioFilePlayer = nil;
     err = AUGraphAddNode(_auGraph, &acd, &_mixerNode);
     require_noerr(err, bail);
     
-    
     acd.componentType = kAudioUnitType_FormatConverter;
     acd.componentSubType = kAudioUnitSubType_Varispeed;
     err = AUGraphAddNode(_auGraph, &acd, &_variSpeedNode);
@@ -160,6 +169,9 @@ static AudioFilePlayer *_sharedAudioFilePlayer = nil;
     require_noerr(err, bail);
     err = AudioUnitSetProperty(unit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, 0, &_ioFormat, sizeof(AudioStreamBasicDescription));
     require_noerr(err, bail);
+    
+    //[self createDestFile];
+//    AudioUnitAddRenderNotify(unit, &MyAURenderCallback, &_destExtAudioFile);
     
     err = AUGraphNodeInfo(_auGraph, _reverbNode, NULL, &unit);
     require_noerr(err, bail);
@@ -208,8 +220,8 @@ static AudioFilePlayer *_sharedAudioFilePlayer = nil;
     err = AUGraphInitialize (_auGraph);
     require_noerr(err, bail);
     
-    err = AUGraphStart (_auGraph);
-    require_noerr(err, bail);
+//    err = AUGraphStart (_auGraph);
+//    require_noerr(err, bail);
     
 bail:
     if (err) {
@@ -294,6 +306,13 @@ bail:
     err = ExtAudioFileGetProperty(_humanExtAudioFile, kExtAudioFileProperty_FileLengthFrames, &size, &fileLengthFrames);
     require_noerr(err, bail);
     
+    [self createDestFile];
+    AudioUnit unit;
+    err = AUGraphNodeInfo(_auGraph, _ioNode, NULL, &unit);
+    require_noerr(err, bail);
+    //[self createDestFile];
+    AudioUnitAddRenderNotify(unit, &MyAURenderCallback, _destExtAudioFile);
+    
     _humanAudioFileFrames = fileLengthFrames;
     
 bail:
@@ -331,8 +350,10 @@ bail:
 {
     [self setupRegion];
     [self setupHumanRegion];
+    AUGraphStart (_auGraph);
     [self startPlayerAfterSeconds:0];
     [self startHumanPlayerAfterSeconds:0];
+    
 }
 
 - (void)stop
@@ -618,6 +639,62 @@ bail:
     return result;
 }
 
+#pragma mark
+
 #pragma mark - File control
+
+- (void)createDestFile {
+    
+    AudioStreamBasicDescription dstFormat;
+//    size = sizeof(dstFormat);
+    dstFormat.mSampleRate = 44100;//myInfo.mDataFormat.mSampleRate;
+    dstFormat.mChannelsPerFrame = 1;//myInfo.mDataFormat.mChannelsPerFrame;
+    dstFormat.mBitsPerChannel = 16;
+    dstFormat.mBytesPerFrame = 4;
+    dstFormat.mBytesPerPacket = 4;
+    dstFormat.mFramesPerPacket = 1;
+    dstFormat.mFormatID = kAudioFormatAppleIMA4;
+    
+    NSURL *url = [NSURL URLWithString:[NSTemporaryDirectory() stringByAppendingPathComponent:@"recordedFile.caf"]];
+    CFURLRef urlRef = (__bridge CFURLRef) url;
+    
+    AudioChannelLayout layout;
+    memset(&layout, 0, sizeof(AudioChannelLayout));
+    layout.mChannelLayoutTag = kAudioChannelLayoutTag_Mono;
+    
+   ExtAudioFileCreateWithURL(urlRef,
+                                         kAudioFileCAFType,
+                                         &dstFormat,
+                                         &layout,
+                                         kAudioFileFlags_EraseFile,
+                                         &_destExtAudioFile);
+}
+
+OSStatus MyAURenderCallback(void *inRefCon,
+                            AudioUnitRenderActionFlags *actionFlags,
+                            const AudioTimeStamp *inTimeStamp,
+                            UInt32 inBusNumber,
+                            UInt32 inNumberFrames,
+                            AudioBufferList *ioData) {
+    
+//    AudioUnit mixerUnit = (AudioUnit)inRefCon;
+//    
+//    AudioUnitRender(mixerUnit,
+//                    actionFlags,
+//                    inTimeStamp,
+//                    0,
+//                    inNumberFrames,
+//                    ioData);
+    
+    ExtAudioFileRef file = (ExtAudioFileRef)inRefCon;
+    if (*actionFlags & kAudioUnitRenderAction_PostRender) {
+        NSLog(@"isofjoisajfioasd");
+       OSStatus res = ExtAudioFileWrite(file,
+                               inNumberFrames,
+                               ioData);
+        OSStatus D = res;
+    }
+    return noErr;
+}
 
 @end
