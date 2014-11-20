@@ -306,12 +306,11 @@ bail:
     err = ExtAudioFileGetProperty(_humanExtAudioFile, kExtAudioFileProperty_FileLengthFrames, &size, &fileLengthFrames);
     require_noerr(err, bail);
     
-    [self createDestFile];
-    AudioUnit unit;
-    err = AUGraphNodeInfo(_auGraph, _ioNode, NULL, &unit);
-    require_noerr(err, bail);
-    //[self createDestFile];
-    AudioUnitAddRenderNotify(unit, &MyAURenderCallback, _destExtAudioFile);
+//    [self createDestFile];
+//    AudioUnit unit;
+//    err = AUGraphNodeInfo(_auGraph, _ioNode, NULL, &unit);
+//    require_noerr(err, bail);
+//    AudioUnitAddRenderNotify(unit, &MyAURenderCallback, _destExtAudioFile);
     
     _humanAudioFileFrames = fileLengthFrames;
     
@@ -322,7 +321,6 @@ bail:
         [self close];
         return NO;
     }
-    
     return YES;
 }
 
@@ -639,62 +637,42 @@ bail:
     return result;
 }
 
-#pragma mark
-
 #pragma mark - File control
 
-- (void)createDestFile {
-    
-    AudioStreamBasicDescription dstFormat;
-//    size = sizeof(dstFormat);
-    dstFormat.mSampleRate = 44100;//myInfo.mDataFormat.mSampleRate;
-    dstFormat.mChannelsPerFrame = 1;//myInfo.mDataFormat.mChannelsPerFrame;
-    dstFormat.mBitsPerChannel = 16;
-    dstFormat.mBytesPerFrame = 4;
-    dstFormat.mBytesPerPacket = 4;
-    dstFormat.mFramesPerPacket = 1;
-    dstFormat.mFormatID = kAudioFormatAppleIMA4;
-    
-    NSURL *url = [NSURL URLWithString:[NSTemporaryDirectory() stringByAppendingPathComponent:@"recordedFile.caf"]];
-    CFURLRef urlRef = (__bridge CFURLRef) url;
-    
-    AudioChannelLayout layout;
-    memset(&layout, 0, sizeof(AudioChannelLayout));
-    layout.mChannelLayoutTag = kAudioChannelLayoutTag_Mono;
-    
-   ExtAudioFileCreateWithURL(urlRef,
-                                         kAudioFileCAFType,
-                                         &dstFormat,
-                                         &layout,
-                                         kAudioFileFlags_EraseFile,
-                                         &_destExtAudioFile);
-}
-
-OSStatus MyAURenderCallback(void *inRefCon,
-                            AudioUnitRenderActionFlags *actionFlags,
-                            const AudioTimeStamp *inTimeStamp,
-                            UInt32 inBusNumber,
-                            UInt32 inNumberFrames,
-                            AudioBufferList *ioData) {
-    
-//    AudioUnit mixerUnit = (AudioUnit)inRefCon;
+//- (void)createDestFile {
 //    
-//    AudioUnitRender(mixerUnit,
-//                    actionFlags,
-//                    inTimeStamp,
-//                    0,
-//                    inNumberFrames,
-//                    ioData);
-    
-    ExtAudioFileRef file = (ExtAudioFileRef)inRefCon;
-    if (*actionFlags & kAudioUnitRenderAction_PostRender) {
-        NSLog(@"isofjoisajfioasd");
-       OSStatus res = ExtAudioFileWrite(file,
-                               inNumberFrames,
-                               ioData);
-        OSStatus D = res;
-    }
-    return noErr;
-}
+//    AudioStreamBasicDescription dstFormat;
+////    size = sizeof(dstFormat);
+//    dstFormat.mSampleRate = 44100;//myInfo.mDataFormat.mSampleRate;
+//    dstFormat.mChannelsPerFrame = 1;//myInfo.mDataFormat.mChannelsPerFrame;
+//    dstFormat.mBitsPerChannel = 16;
+//    dstFormat.mBytesPerFrame = 4;
+//    dstFormat.mBytesPerPacket = 4;
+//    dstFormat.mFramesPerPacket = 1;
+//    dstFormat.mFormatID = kAudioFormatAppleIMA4;
+//    
+//    NSURL *url = [NSURL URLWithString:[NSTemporaryDirectory() stringByAppendingPathComponent:@"recordedFile.caf"]];
+//    CFURLRef urlRef = (__bridge CFURLRef) url;
+//    
+//    AudioChannelLayout layout;
+//    memset(&layout, 0, sizeof(AudioChannelLayout));
+//    layout.mChannelLayoutTag = kAudioChannelLayoutTag_Mono;
+//    
+//   ExtAudioFileCreateWithURL(urlRef, kAudioFileCAFType, &dstFormat, &layout, kAudioFileFlags_EraseFile, &_destExtAudioFile);
+//}
+//
+//OSStatus MyAURenderCallback(void *inRefCon,
+//                            AudioUnitRenderActionFlags *actionFlags,
+//                            const AudioTimeStamp *inTimeStamp,
+//                            UInt32 inBusNumber,
+//                            UInt32 inNumberFrames,
+//                            AudioBufferList *ioData) {
+//    OSStatus res = noErr;
+//    ExtAudioFileRef file = (ExtAudioFileRef)inRefCon;
+//    if (*actionFlags & kAudioUnitRenderAction_PostRender) {
+//       res = ExtAudioFileWrite(file, inNumberFrames, ioData);
+//    }
+//    return res;
+//}
 
 @end
