@@ -2,7 +2,7 @@
 //  AudioFilePlayer.h
 //  AudioFilePlayerSample
 //
-//  Created by 八十嶋 祐樹 on 12/07/07.
+//  Created by DongYi on 14-11-19.
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 

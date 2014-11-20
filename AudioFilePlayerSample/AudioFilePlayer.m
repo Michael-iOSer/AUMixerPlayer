@@ -2,7 +2,7 @@
 //  AudioFilePlayer.m
 //  AudioFilePlayerSample
 //
-//  Created by 八十嶋 祐樹 on 12/07/07.
+//  Created by DongYi on 14-11-19.
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
@@ -202,20 +202,32 @@ static AudioFilePlayer *_sharedAudioFilePlayer = nil;
     err = AudioUnitSetProperty(unit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, 0, &_ioFormat, sizeof(AudioStreamBasicDescription));
     require_noerr(err, bail);
     
-    err = AUGraphConnectNodeInput(_auGraph, _reverbNode, 0, _ioNode, 0);
-    require_noerr(err, bail);
+    //humanPlayerNode -> _reverbNode -> _mixerNode
+    //musicPlayerNode -> _mixerNode
     
-    err = AUGraphConnectNodeInput(_auGraph, _variSpeedNode, 0, _reverbNode, 0);
-    require_noerr(err, bail);
-    
-    err = AUGraphConnectNodeInput(_auGraph, _mixerNode, 0, _variSpeedNode, 0);
+    err = AUGraphConnectNodeInput(_auGraph, _humanPlayerNode, 0, _reverbNode, 0);
     require_noerr(err, bail);
     
     err = AUGraphConnectNodeInput(_auGraph, _playerNode, 0, _mixerNode, 0);
     require_noerr(err, bail);
     
-    err = AUGraphConnectNodeInput(_auGraph, _humanPlayerNode, 0, _mixerNode, 1);
+    err = AUGraphConnectNodeInput(_auGraph, _reverbNode, 0, _mixerNode, 1);
     require_noerr(err, bail);
+    
+    err = AUGraphConnectNodeInput(_auGraph, _mixerNode, 0, _ioNode, 0);
+    require_noerr(err, bail);
+    
+//    err = AUGraphConnectNodeInput(_auGraph, _variSpeedNode, 0, _reverbNode, 0);
+//    require_noerr(err, bail);
+//    
+//    err = AUGraphConnectNodeInput(_auGraph, _mixerNode, 0, _variSpeedNode, 0);
+//    require_noerr(err, bail);
+//    
+//    err = AUGraphConnectNodeInput(_auGraph, _playerNode, 0, _mixerNode, 0);
+//    require_noerr(err, bail);
+//    
+//    err = AUGraphConnectNodeInput(_auGraph, _humanPlayerNode, 0, _mixerNode, 1);
+//    require_noerr(err, bail);
     
     err = AUGraphInitialize (_auGraph);
     require_noerr(err, bail);

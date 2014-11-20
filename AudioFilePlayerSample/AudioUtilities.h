@@ -2,7 +2,7 @@
 //  AudioUtilities.h
 //  AudioUnitTest
 //
-//  Created by 八十嶋 祐樹 on 11/07/18.
+//  Created by DongYi on 14-11-19.
 //  Copyright 2011 Yuki Yasoshima. All rights reserved.
 //
 
