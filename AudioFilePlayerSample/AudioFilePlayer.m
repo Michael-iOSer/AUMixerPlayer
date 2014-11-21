@@ -629,6 +629,12 @@ bail:
     AudioUnitSetParameter(pitchUnit, kNewTimePitchParam_Overlap, kAudioUnitScope_Global, 0, value, 0);
 }
 
+- (void)setPitchRate:(AudioUnitParameterValue)value {
+    AudioUnit pitchUnit;
+    OSStatus err = AUGraphNodeInfo(_auGraph, _pitchNode, NULL, &pitchUnit);
+    AudioUnitSetParameter(pitchUnit, kNewTimePitchParam_Rate, kAudioUnitScope_Global, 0, value, 0);
+}
+
 - (AudioUnitParameterValue)variSpeed
 {
     AudioUnitParameterValue value = 0;

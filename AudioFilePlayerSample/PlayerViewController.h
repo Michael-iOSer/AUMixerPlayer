@@ -19,5 +19,6 @@
 @property (nonatomic, retain) IBOutlet UILabel *timeLabel;
 @property (nonatomic, retain) IBOutlet UILabel *pitchLabel;
 @property (nonatomic, retain) IBOutlet UILabel *overlapLabel;
+@property (nonatomic, retain) IBOutlet UILabel *rateLabel;
 
 @end

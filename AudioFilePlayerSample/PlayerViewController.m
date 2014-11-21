@@ -109,4 +109,9 @@
     _overlapLabel.text = [NSString stringWithFormat:@"%.2f", sender.value];
 }
 
+- (IBAction)pitchRate:(UISlider *)sender {
+    [AudioFilePlayer sharedAudioFilePlayer].pitchRate = sender.value;
+    _rateLabel.text = [NSString stringWithFormat:@"%.2f", sender.value];
+}
+
 @end
