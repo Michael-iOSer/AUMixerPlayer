@@ -57,6 +57,8 @@ static uint64_t ConvertNanoSecToMachTime(uint64_t nanoSec) {
     AUNode _playerNode;
     AUNode _humanPlayerNode;
     
+    AUNode _pitchNode;
+    
     AudioStreamBasicDescription _ioFormat;
 }
 @synthesize isLoop = _isLoop;
@@ -140,6 +142,11 @@ static AudioFilePlayer *_sharedAudioFilePlayer = nil;
     require_noerr(err, bail);
     
     acd.componentType = kAudioUnitType_FormatConverter;
+    acd.componentSubType = kAudioUnitSubType_NewTimePitch;
+    err = AUGraphAddNode(_auGraph, &acd, &_pitchNode);
+    require_noerr(err, bail);
+    
+    acd.componentType = kAudioUnitType_FormatConverter;
     acd.componentSubType = kAudioUnitSubType_Varispeed;
     err = AUGraphAddNode(_auGraph, &acd, &_variSpeedNode);
     require_noerr(err, bail);
@@ -185,6 +192,16 @@ static AudioFilePlayer *_sharedAudioFilePlayer = nil;
     err = AudioUnitSetParameter(unit, 5, kAudioUnitScope_Global, 0, reverbTime, 0);
     require_noerr(err, bail);
     
+    err = AUGraphNodeInfo(_auGraph, _pitchNode, NULL, &unit);
+    require_noerr(err, bail);
+    err = AudioUnitSetProperty(unit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, 0, &_ioFormat, sizeof(AudioStreamBasicDescription));
+    require_noerr(err, bail);
+    err = AudioUnitSetProperty(unit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input, 0, &_ioFormat, sizeof(AudioStreamBasicDescription));
+    require_noerr(err, bail);
+    AudioUnitParameterValue pitchRate = 2000.0f;
+    err = AudioUnitSetParameter(unit, kNewTimePitchParam_Pitch, kAudioUnitScope_Global, 0, pitchRate, 0);
+    require_noerr(err, bail);
+    
     err = AUGraphNodeInfo(_auGraph, _variSpeedNode, NULL, &unit);
     require_noerr(err, bail);
     err = AudioUnitSetProperty(unit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, 0, &_ioFormat, sizeof(AudioStreamBasicDescription));
@@ -205,13 +222,13 @@ static AudioFilePlayer *_sharedAudioFilePlayer = nil;
     //humanPlayerNode -> _reverbNode -> _mixerNode
     //musicPlayerNode -> _mixerNode
     
-    err = AUGraphConnectNodeInput(_auGraph, _humanPlayerNode, 0, _reverbNode, 0);
+    err = AUGraphConnectNodeInput(_auGraph, _humanPlayerNode, 0, _pitchNode, 0);
     require_noerr(err, bail);
     
     err = AUGraphConnectNodeInput(_auGraph, _playerNode, 0, _mixerNode, 0);
     require_noerr(err, bail);
     
-    err = AUGraphConnectNodeInput(_auGraph, _reverbNode, 0, _mixerNode, 1);
+    err = AUGraphConnectNodeInput(_auGraph, _pitchNode, 0, _mixerNode, 1);
     require_noerr(err, bail);
     
     err = AUGraphConnectNodeInput(_auGraph, _mixerNode, 0, _ioNode, 0);
