@@ -15,6 +15,7 @@
 @property (nonatomic, assign, readonly) Float32 length;
 @property (nonatomic, assign) Float32 startTime;
 @property (nonatomic, assign) AudioUnitParameterValue reverbMix;
+@property (nonatomic, assign) AudioUnitParameterValue pitchOverlap;
 @property (nonatomic, assign) AudioUnitParameterValue variSpeed;
 @property (nonatomic, assign, readonly) Float32 currentPlayTime;
 

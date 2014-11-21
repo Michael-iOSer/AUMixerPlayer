@@ -58,7 +58,6 @@
     self.loopSwitch.on = [AudioFilePlayer sharedAudioFilePlayer].isLoop;
     self.variSpeedSlider.value = [AudioFilePlayer sharedAudioFilePlayer].variSpeed;
     self.reverbMixSlider.value = [AudioFilePlayer sharedAudioFilePlayer].reverbMix;
-    
     self.timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
 }
 
@@ -100,9 +99,14 @@
     [AudioFilePlayer sharedAudioFilePlayer].reverbMix = sender.value;
 }
 
-- (IBAction)variSpeed:(UISlider *)sender
-{
+- (IBAction)variSpeed:(UISlider *)sender {
     [AudioFilePlayer sharedAudioFilePlayer].variSpeed = sender.value;
+    _pitchLabel.text = [NSString stringWithFormat:@"%.2f", sender.value];
+}
+
+- (IBAction)pitchOverlap:(UISlider *)sender {
+    [AudioFilePlayer sharedAudioFilePlayer].pitchOverlap = sender.value;
+    _overlapLabel.text = [NSString stringWithFormat:@"%.2f", sender.value];
 }
 
 @end

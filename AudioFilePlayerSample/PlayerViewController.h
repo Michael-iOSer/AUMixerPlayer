@@ -14,7 +14,10 @@
 @property (nonatomic, retain) IBOutlet UISlider *startTimeSlider;
 @property (nonatomic, retain) IBOutlet UISwitch *loopSwitch;
 @property (nonatomic, retain) IBOutlet UISlider *variSpeedSlider;
+@property (nonatomic, retain) IBOutlet UISlider *pitchOverlapSlider;
 @property (nonatomic, retain) IBOutlet UISlider *reverbMixSlider;
 @property (nonatomic, retain) IBOutlet UILabel *timeLabel;
+@property (nonatomic, retain) IBOutlet UILabel *pitchLabel;
+@property (nonatomic, retain) IBOutlet UILabel *overlapLabel;
 
 @end

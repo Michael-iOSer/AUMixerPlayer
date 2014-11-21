@@ -198,8 +198,11 @@ static AudioFilePlayer *_sharedAudioFilePlayer = nil;
     require_noerr(err, bail);
     err = AudioUnitSetProperty(unit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input, 0, &_ioFormat, sizeof(AudioStreamBasicDescription));
     require_noerr(err, bail);
-    AudioUnitParameterValue pitchRate = 2000.0f;
+    AudioUnitParameterValue pitchRate = 1.0f;
     err = AudioUnitSetParameter(unit, kNewTimePitchParam_Pitch, kAudioUnitScope_Global, 0, pitchRate, 0);
+    require_noerr(err, bail);
+    AudioUnitParameterValue overlap = 8.0f;
+    err = AudioUnitSetParameter(unit, kNewTimePitchParam_Overlap, kAudioUnitScope_Global, 0, overlap, 0);
     require_noerr(err, bail);
     
     err = AUGraphNodeInfo(_auGraph, _variSpeedNode, NULL, &unit);
@@ -225,7 +228,7 @@ static AudioFilePlayer *_sharedAudioFilePlayer = nil;
     err = AUGraphConnectNodeInput(_auGraph, _humanPlayerNode, 0, _pitchNode, 0);
     require_noerr(err, bail);
     
-    err = AUGraphConnectNodeInput(_auGraph, _playerNode, 0, _mixerNode, 0);
+    //err = AUGraphConnectNodeInput(_auGraph, _playerNode, 0, _mixerNode, 0);
     require_noerr(err, bail);
     
     err = AUGraphConnectNodeInput(_auGraph, _pitchNode, 0, _mixerNode, 1);
@@ -604,17 +607,26 @@ bail:
 
 - (void)setVariSpeed:(AudioUnitParameterValue)value
 {
-    AudioUnit variUnit;
-    OSStatus err = AUGraphNodeInfo(_auGraph, _variSpeedNode, NULL, &variUnit);
-    require_noerr(err, bail);
-    
-    err = AudioUnitSetParameter(variUnit, 1, kAudioUnitScope_Global, 0, value, 0);
-    require_noerr(err, bail);
-    
-bail:
-    if (err) {
-        NSLog(@"%s %ld", __FUNCTION__, err);
-    }
+    AudioUnit pitchUnit;
+    OSStatus err = AUGraphNodeInfo(_auGraph, _pitchNode, NULL, &pitchUnit);
+    AudioUnitSetParameter(pitchUnit, kNewTimePitchParam_Pitch, kAudioUnitScope_Global, 0, value, 0);
+//    AudioUnit variUnit;
+//    OSStatus err = AUGraphNodeInfo(_auGraph, _variSpeedNode, NULL, &variUnit);
+//    require_noerr(err, bail);
+//    
+//    err = AudioUnitSetParameter(variUnit, 1, kAudioUnitScope_Global, 0, value, 0);
+//    require_noerr(err, bail);
+//    
+//bail:
+//    if (err) {
+//        NSLog(@"%s %ld", __FUNCTION__, err);
+//    }
+}
+
+- (void)setPitchOverlap:(AudioUnitParameterValue)value {
+    AudioUnit pitchUnit;
+    OSStatus err = AUGraphNodeInfo(_auGraph, _pitchNode, NULL, &pitchUnit);
+    AudioUnitSetParameter(pitchUnit, kNewTimePitchParam_Overlap, kAudioUnitScope_Global, 0, value, 0);
 }
 
 - (AudioUnitParameterValue)variSpeed
